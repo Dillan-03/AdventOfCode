@@ -4,7 +4,7 @@
 
 def isCorrectOrder(rules, update):
     # Check if an update is in the correct order based on the rules
-    # Create a set of all rules as pairs for easy lookup
+    # Create a set of all rules as pairs 
     rule_set = {(int(x), int(y)) for x, y in (rule.split('|') for rule in rules)}
     
     for x, y in rule_set:
@@ -68,7 +68,7 @@ def calculateMiddleSumPartTwo(pageOrderingRules, updates):
             middlesum += sorted_update[middleIndex]
     
     return middlesum
-# Example Input
+
 pageOrderingRules = """47|53
 97|13
 97|61
