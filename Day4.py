@@ -9,17 +9,17 @@ def find_XMAS_count(grid):
     count = 0
     word="XMAS"
    
-    # Horizontal, Forwards and Backwards
+    # Horizontal
     for i in range(rows):
         for j in range(cols - word_length + 1):
-            # Left-to-right
+            # left-to-right
             if grid[i][j:j + word_length] == word:
                 count += 1
-            # Right-to-left
+            # right-to-left
             if grid[i][j:j + word_length][::-1] == word:
                 count += 1
 
-    # Vertical Both Ways
+    # Vertical
     for i in range(rows - word_length + 1):
         for j in range(cols):
             # top-to-bottom
@@ -29,13 +29,13 @@ def find_XMAS_count(grid):
             if all(grid[i + k][j] == word[-(k + 1)] for k in range(word_length)):
                 count += 1
 
-    # Diagonal (Down-Right and Up-Left)
+    # Diagonal
     for i in range(rows - word_length + 1):
         for j in range(cols - word_length + 1):
             # down-right diagonal
             if all(grid[i + k][j + k] == word[k] for k in range(word_length)):
                 count += 1
-            # Up-left diagonal
+            # up-left diagonal
             if all(grid[i + word_length - k - 1][j + word_length - k - 1] == word[k] for k in range(word_length)):
                 count += 1
 
@@ -49,6 +49,40 @@ def find_XMAS_count(grid):
             if all(grid[i + word_length - k - 1][j - word_length + k + 1] == word[k] for k in range(word_length)):
                 count += 1
 
+    return count
+
+def find_X_MAS_count(grid):
+    # Split the input into rows
+    grid = grid.split("\n")
+    rows, cols = len(grid), len(grid[0])
+    count = 0
+
+
+    # Check if the grid contains an "X-MAS" pattern centered at (x, y)
+    def is_x_mas(x, y):
+        
+
+        # Check for the forward "MAS" pattern
+        forward_mas = (
+            grid[x-1][y-1] == 'M' and grid[x-1][y+1] == 'S' and
+            grid[x+1][y-1] == 'M' and grid[x+1][y+1] == 'S'
+        )
+
+        # Check for the backward "SAM" pattern
+        backward_sam = (
+            grid[x-1][y-1] == 'S' and grid[x-1][y+1] == 'M' and
+            grid[x+1][y-1] == 'S' and grid[x+1][y+1] == 'M'
+        )
+
+        # The center must always be 'A'
+        return grid[x][y] == 'A' and (forward_mas or backward_sam)
+
+    
+    for i in range(1, rows - 1): 
+        for j in range(1, cols - 1): 
+            if is_x_mas(i, j):
+                count += 1
+               
     return count
 
 data="""SAMXXSXXSXSAMXMMSMMMMSAMXSXMMMAMXXMSSMSMMMMMXSAXMAMMSSMXMXMAXSXSASMSSMXMMSAMXMMXMMSSSMMMSAMXXSASMSAMXMSXXAMAMXMMXMSAMXSMSMSXSMAMXMASXMXAMSMM
